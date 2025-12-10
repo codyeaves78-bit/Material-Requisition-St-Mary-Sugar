@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const materialItemsContainer = document.getElementById('materialItems');
     const addItemBtn = document.getElementById('addItemBtn');
     let itemCounter = 0;
-    // --- ADJUSTMENT: Recipient email is now blank ---
     const RECIPIENT_EMAIL = ''; 
 
     // Function to calculate Total Price
@@ -12,15 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const unitPriceInput = document.getElementById(`itemUnitPrice${itemId}`);
         const totalPriceInput = document.getElementById(`itemTotalPrice${itemId}`);
 
-        // Treat empty inputs as 0 for calculation, but require them to be filled by 'required' attribute
         const quantity = parseFloat(quantityInput.value) || 0;
         const unitPrice = parseFloat(unitPriceInput.value) || 0;
         
         const total = (quantity * unitPrice).toFixed(2);
-        // Format for display with dollar sign
         totalPriceInput.value = total > 0 ? `$${total}` : ''; 
         
-        // Store the raw number in a data attribute for easy retrieval later
         totalPriceInput.setAttribute('data-raw-total', total);
     }
     
@@ -97,7 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = {
             date: document.getElementById('date').value,
             department: document.getElementById('department').value,
-            requisitionNo: document.getElementById('requisitionNo').value || 'N/A',
+            // MODIFIED LINE: Changed from requisitionNo to vendorName
+            vendorName: document.getElementById('vendorName').value || 'N/A', 
             reason: document.getElementById('reason').value,
             requestedBy: document.getElementById('requestedBy').value,
             materials: []
@@ -126,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let emailBody = '--- MATERIAL REQUISITION FORM ---\n\n';
         emailBody += `Date: ${formData.date}\n`;
         emailBody += `Department: ${formData.department}\n`;
-        emailBody += `Requisition No.: ${formData.requisitionNo}\n\n`;
+        // MODIFIED LINE: Changed text in the email body
+        emailBody += `Vendor Name: ${formData.vendorName}\n\n`; 
         emailBody += `Requested By: ${formData.requestedBy}\n`;
         emailBody += `Reason/Job Description:\n${formData.reason}\n\n`;
         
@@ -135,17 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         emailBody += '----------------------------------------------------------------------------------------\n';
         
         formData.materials.forEach((material) => {
-            // Using padding for alignment in the plain text email
             const accNo = material.accountNo.padEnd(8);
             const qty = material.quantity.padStart(3);
-            
-            // Description takes up more space
             const desc = material.description.padEnd(45).substring(0, 45); 
-            
             const uPrice = `$${material.unitPrice}`.padStart(9);
             const tPrice = `$${material.totalPrice}`.padStart(10);
             
-            // Constructing the line in the desired order
             emailBody += `${accNo} | ${qty} | ${desc} | ${uPrice} | ${tPrice}\n`;
         });
         
@@ -158,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const encodedSubject = encodeURIComponent(subject);
         const encodedBody = encodeURIComponent(emailBody);
 
-        // The 'mailto:' link now uses the blank RECIPIENT_EMAIL variable
         const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
 
         // --- 4. Open Email Client ---
