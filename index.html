@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material Requisition Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Material Requisition Form</h1>
+        <form id="requisitionForm">
+            
+            <fieldset>
+                <legend>Requisition Details</legend>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="department">Department:</label>
+                <input type="text" id="department" name="department" required placeholder="e.g., Maintenance, Operations">
+
+                <label for="requisitionNo">Requisition No. (Optional):</label>
+                <input type="text" id="requisitionNo" name="requisitionNo">
+            </fieldset>
+
+            <fieldset id="materialItems">
+                <legend>Materials Required</legend>
+                </fieldset>
+            <button type="button" id="addItemBtn" class="secondary-btn">Add Another Item</button>
+            
+            <fieldset>
+                <label for="reason">Reason/Job Description:</label>
+                <textarea id="reason" name="reason" rows="4" required placeholder="Brief description of the job or reason for requisition."></textarea>
+            
+                <label for="requestedBy">Requested By:</label>
+                <input type="text" id="requestedBy" name="requestedBy" required>
+            </fieldset>
+
+            <button type="submit" id="submitBtn">Email Requisition</button>
+        </form>
+        <p class="note">**Note:** Clicking 'Email Requisition' will open your default email application (like Outlook or Gmail) with a pre-filled draft email.</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
