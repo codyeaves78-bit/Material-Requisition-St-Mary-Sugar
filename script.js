@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const materialItemsContainer = document.getElementById('materialItems');
     const addItemBtn = document.getElementById('addItemBtn');
     let itemCounter = 0;
-    const RECIPIENT_EMAIL = 'ceaves@stmarysugar.com';
+    // --- ADJUSTMENT: Recipient email is now blank ---
+    const RECIPIENT_EMAIL = ''; 
 
     // Function to calculate Total Price
     function calculateTotal(itemId) {
@@ -130,7 +131,6 @@ document.addEventListener('DOMContentLoaded', () => {
         emailBody += `Reason/Job Description:\n${formData.reason}\n\n`;
         
         emailBody += '--- MATERIALS REQUIRED ---\n';
-        // UPDATED HEADER ORDER: Account number | Quantity | Description | Unit Cost | Total Cost
         emailBody += 'Acct No. | Qty | Description                                   | Unit Cost | Total Cost\n';
         emailBody += '----------------------------------------------------------------------------------------\n';
         
@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const encodedSubject = encodeURIComponent(subject);
         const encodedBody = encodeURIComponent(emailBody);
 
+        // The 'mailto:' link now uses the blank RECIPIENT_EMAIL variable
         const mailtoLink = `mailto:${RECIPIENT_EMAIL}?subject=${encodedSubject}&body=${encodedBody}`;
 
         // --- 4. Open Email Client ---
